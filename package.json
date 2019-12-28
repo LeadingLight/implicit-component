@@ -1,13 +1,16 @@
 {
   "name": "implicit-component",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": " this is ridiculously simple dependency injection for react components using context and hooks",
   "author": "LeadingLight",
   "license": "MIT",
   "repository": "leadinglight/implicit-component",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
-  "files": ["dist", "README.md"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "jsnext:main": "dist/index.es.js",
   "engines": {
     "node": ">=8",
