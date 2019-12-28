@@ -21,7 +21,7 @@ npm i implicit-component
 ### Trivial Example
 ````javascript
 import React from 'react';
-import ComponentContext, {useComponentList} from 'implicit-component';
+import ComponentContext, {useComponentContext} from 'implicit-component';
 
 function Header() {
   return <h2>{'Header'}</h2>;
@@ -34,7 +34,7 @@ function Body() {
 const componentList = {Header, Body};
 
 function Page() {
-  const {Body, Header} = useComponentList();
+  const {Body, Header} = useComponentContext();
 
   return (
     <div>
@@ -62,7 +62,7 @@ In the next example there are actually a point in the indirection. And a step, a
 
 ````javascript
 import React from 'react';
-import ComponentContext, {useComponentList} from 'implicit-component';
+import ComponentContext, {useComponentContext} from 'implicit-component';
 
 function Header1() {
   return <h2>{'Header 1'}</h2>;
@@ -81,7 +81,7 @@ function Body2() {
 }
 
 function Page() {
-  const {Body, Header} = useComponentList();
+  const {Body, Header} = useComponentContext();
 
   return (
     <div>
