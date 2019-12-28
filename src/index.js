@@ -1,21 +1,15 @@
-import * as React from 'react'
+import React, {useContext} from 'react';
 
-export const useMyHook = () => {
-  let [{
-    counter
-  }, setState] = React.useState({
-    counter: 0
-  })
+const ComponentListContext = React.createContext({});
 
-  React.useEffect(() => {
-    let interval = window.setInterval(() => {
-      counter++
-      setState({counter})
-    }, 1000)
-    return () => {
-      window.clearInterval(interval)
-    }
-  }, [])
+export function ComponentContext({list = {}, children}) {
+  const parentContext = useContext(ComponentListContext);
 
-  return counter
+  list.__proto__ = parentContext;
+
+  return <ComponentListContext.Provider value={list}>{children}</ComponentListContext.Provider>;
+}
+
+export function useComponentContext() {
+  return useContext(ComponentListContext);
 }

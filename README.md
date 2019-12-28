@@ -1,34 +1,160 @@
 # implicit-component
 
-> simple dependency injection for react components
+## Description
 
-[![NPM](https://img.shields.io/npm/v/implicit-component.svg)](https://www.npmjs.com/package/implicit-component) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+ This is ridiculously simple dependency injection for React components using context and hooks.
+
 
 ## Install
 
-```bash
-npm install --save implicit-component
-```
+````
+yarn add implicit-component
+````
+or
+
+````
+npm i implicit-component
+````
 
 ## Usage
 
-```jsx
-import React, { Component } from 'react'
+### Trivial Example
+````javascript
+import React from 'react';
+import ComponentContext, {useComponentList} from 'implicit-component';
 
-import { useMyHook } from 'implicit-component'
-
-const Example = () => {
-  const example = useMyHook()
-  return (
-    <div>{example}</div>
-  )
+function Header() {
+  return <h2>{'Header'}</h2>;
 }
-```
 
-## License
+function Body() {
+  return <p>{'Body'}</p>;
+}
 
-MIT © [LeadingLight](https://github.com/LeadingLight)
+const componentList = {Header, Body};
 
----
+function Page() {
+  const {Body, Header} = useComponentList();
 
-This hook is created using [create-react-hook](https://github.com/hermanya/create-react-hook).
+  return (
+    <div>
+      <Header />
+      <Body />
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+      <ComponentContext list={componentList}>
+        <Page />
+      </ComponentContext>
+  );
+}
+
+````
+
+What does this give us? Absolutely nothing, other than that the components in Page are no longer hard coded. For this app there is absolutely no point in adding more indirection.
+
+### Contrived Example
+
+In the next example there are actually a point in the indirection. And a step, al be it a small one, closer to an actual use case.
+
+````javascript
+import React from 'react';
+import ComponentContext, {useComponentList} from 'implicit-component';
+
+function Header1() {
+  return <h2>{'Header 1'}</h2>;
+}
+
+function Header2() {
+  return <h2>{'Header 2'}</h2>;
+}
+
+function Body1() {
+  return <p>{'Body 1'}</p>;
+}
+
+function Body2() {
+  return <p>{'Body 2'}</p>;
+}
+
+function Page() {
+  const {Body, Header} = useComponentList();
+
+  return (
+    <div>
+      <Header />
+      <Body />
+    </div>
+  );
+}
+
+const compList1 = {Header: Header1, Body: Body1};
+const compList2 = {Header: Header2, Body: Body2};
+
+export default function App() {
+  return (
+    <div>
+      <ComponentContext list={compList1}>
+        <Page />
+      </ComponentContext>
+      <ComponentContext list={compList2}>
+        <Page />
+      </ComponentContext>
+    </div>
+  );
+}
+
+````
+
+Now this was actually useful. We could reuse the Page component and render different components based only on the component context.
+
+### Nested Contexts
+
+Contexts are nested by prototype chaining. That means we can create a global list of components that we can override locally by nesting contexts, and the none overridden components in the parent contexts are still accessible.
+
+````javascript
+import React from 'react';
+import ComponentContext, {useComponentContext} from 'implicit-component';
+
+function Header1() {
+  return <h2>{'Header 1'}</h2>;
+}
+
+function Body1() {
+  return <p>{'Body 1'}</p>;
+}
+
+function Body2() {
+  return <p>{'Body 2'}</p>;
+}
+
+function Page() {
+  const {Body, Header} = useComponentContext();
+
+  return (
+    <div>
+      <Header />
+      <Body />
+    </div>
+  );
+}
+
+const compList1 = {Header: Header1, Body: Body1};
+const compList2 = {Body: Body2};
+
+export default function App() {
+  return (
+    <ComponentContext list={compList1}>
+      <ComponentContext list={compList2}>
+        <Page />
+      </ComponentContext>
+    </ComponentContext>
+  );
+}
+
+````
+
+Here we override the body in the inner context butt are still using header1.
