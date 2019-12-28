@@ -21,7 +21,7 @@ npm i implicit-component
 ### Trivial Example
 ````javascript
 import React from 'react';
-import ComponentContext, {useComponentContext} from 'implicit-component';
+import {ComponentContext, useComponentContext} from "implicit-component";
 
 function Header() {
   return <h2>{'Header'}</h2>;
@@ -62,7 +62,7 @@ In the next example there are actually a point in the indirection. And a step, a
 
 ````javascript
 import React from 'react';
-import ComponentContext, {useComponentContext} from 'implicit-component';
+import {ComponentContext, useComponentContext} from "implicit-component";
 
 function Header1() {
   return <h2>{'Header 1'}</h2>;
@@ -117,7 +117,7 @@ Contexts are nested by prototype chaining. That means we can create a global lis
 
 ````javascript
 import React from 'react';
-import ComponentContext, {useComponentContext} from 'implicit-component';
+import {ComponentContext, useComponentContext} from "implicit-component";
 
 function Header1() {
   return <h2>{'Header 1'}</h2>;
