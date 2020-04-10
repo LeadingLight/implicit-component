@@ -8,7 +8,7 @@
     "prop-types": "^15.6.2",
     "react": "link:../node_modules/react",
     "react-dom": "^16.8.6",
-    "react-scripts": "^3.0.1",
+    "react-scripts": "^3.4.1",
     "implicit-component": "link:.."
   },
   "scripts": {
